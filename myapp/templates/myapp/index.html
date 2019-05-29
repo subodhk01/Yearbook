@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>YearBook{% block title %}{% endblock %}</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<!--===============================================================================================-->
+
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href='{% static "vendor/bootstrap/css/bootstrap.min.css" %}'>
+<!--===============================================================================================-->
+<!--===============================================================================================-->
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href='{% static "vendor/animate/animate.css" %}'>
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href='{% static "vendor/css-hamburgers/hamburgers.min.css" %}'>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href='{% static "vendor/animsition/css/animsition.min.css" %}'>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href='{% static "vendor/select2/select2.min.css" %}'>
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href='{% static "vendor/daterangepicker/daterangepicker.css" %}'>
+<!--===============================================================================================-->
+
+
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'myapp/css/main.css'%}">
+	<link rel="stylesheet" type="text/css" href="{% static 'myapp/css/util.css'%}">
+<!--===============================================================================================-->
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-84158236-6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-84158236-6');
+</script>
+	
+</head>
+<body>
+	
+	{% block body %}
+	<div class="container-login100" style="background-image:
+    url('{% static 'myapp/images/bg.jpg' %}');">
+		<div class="wrap-login100 p-l-55 p-r-55 p-t-50 p-b-30">
+			<!-- <form class="login100-form validate-form" method="POST" enctype="multipart/form-data"> -->
+				
+				<span class="login100-form-logo">
+						<img  class="img-responsive" src="{% static 'myapp/images/devclub.jpg' %}" style="box-sizing: border-box; border-radius:20px;" height="150" width="300"/>
+				</span>
+			<!-- 	<p style="display: block;font-family: SourceSansPro-Bold; font-size: 20px; color: #4b2354; line-height: 1.2;  text-align: center;">Presents</p>
+				{% csrf_token %}
+				<span class="login100-form-title p-b-37">
+					Yearbook
+				<p style="text-align: center; color: #4b2354">
+					 For 2015 Batch Only
+				</p> -->
+				<p style="text-align: center; color: #4b2354">
+					 {{error_string}}
+				</p>	  
+	</span>
+			<!-- 
+
+				<div class="wrap-input100 validate-input m-b-20" data-validate="Enter Entry Number">
+					<input class="input100" type="text" name="username" placeholder="Entry Number">
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="wrap-input100 validate-input m-b-25" data-validate = "Enter Password">
+					<input class="input100" type="password" name="password" placeholder="Password">
+					<span class="focus-input100"></span>
+				</div>
+				
+				<div class="wrap-input100 validate-input m-b-25" data-validate = "Enter Password">
+					<input type="hidden" name="next" value="{{ next }}" />
+					<span class="focus-input100"></span>
+				</div>			
+
+ -->
+
+ 				<div class="container">
+ 					  <form method="post">
+    {% csrf_token %}
+      <input type="text" name="username" placeholder="username"><br><br/>
+  <input type="password" name="password" placeholder="password"><br><br/>
+
+    <button class="login100-form-btn" type="submit">Login</button>
+  </form>
+<!-- 					<button class="login100-form-btn">
+						Login with kerberos
+					</button> -->
+				</div>
+    <!--     <p style="display: block;font-family: SourceSansPro-Bold; font-size:
+        20px; color: #4b2354; line-height: 1.2;  text-align: center;"> 
+        <a href="https://bit.ly/2CBk06o"> Contact Us / Feedback </a>
+        </p> -->
+       <!-- </form>		 -->
+		</div>
+   	</div>
+
+	{% endblock %}
+	
+<!--===============================================================================================-->
+	<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+</body>
+
+</html>

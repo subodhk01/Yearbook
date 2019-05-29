@@ -1,0 +1,55 @@
+{% extends 'myapp/profile.html' %}
+{% block title %}Other comments{% endblock %}
+{% block body %}
+	{% if comments  %}
+	<div class="wrap-login100 p-l-55 p-r-55 p-t-50 p-b-30">
+		<form class="login100-form validate-form" method="POST" enctype="multipart/form-data">
+			{% csrf_token %}
+			<span class="login100-form-title p-b-37">
+				Others' comments
+			</span>
+			{% for comment,fromWhom,name,displayInPdf,showNameinPDF in comments %}
+			{% if comment %}
+				<h5>{{ comment }}</h5>
+				<h6> from {{ name }} ({{ fromWhom }})</h6>
+				<input style="display:none" type="text" name="fromWhom[]" value="{{ fromWhom }}" readonly="readonly">
+								<label style="padding-top: 10px">Displaying name in pdf: </label>
+
+				{% if showNameinPDF == 'True' %}
+					Yes
+				{% else %}
+					No
+				{% endif %}
+				<br/>
+				<label style="padding-top: 5px">Display in pdf: </label>
+
+				{% if displayInPdf == 'True' %}
+					<select style="float:right;width: 30%" class="form-control" name = "val[]" >
+						<option value="True">Yes</option>
+						<option value="False">No</option>
+					</select>
+				{% else %}
+					<select style="float:right;width: 30%" class="form-control" name = "val[]" >
+						<option value="False">No</option>
+						<option value="True">Yes</option>
+					</select>
+				{% endif %}
+
+				<hr>
+			{% endif %}
+			{% endfor %}
+			<div class="container-login100-form-btn">
+				<button class="login100-form-btn">
+					Save Comment Display
+				</button>
+			</div>
+		</form>			
+	</div>
+	{% endif %}
+
+
+
+
+{% endblock %}
+</body>
+</html>
