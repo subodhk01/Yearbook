@@ -8,7 +8,7 @@ from . import views
 urlpatterns = [
     url(r'^yearbook$', views.comingsoon, name='yearbook'),    
     #url(r'^$', views.index, name='index'),
-    url(r'^logout/$', views.logout, {'next_page': '/'}, name='logout'),
+    url(r'^logout/$', views.userlogout, name='logout'),
     url(r'^changePassword$', views.changePassword, name='changePassword'),
     url(r'^profile$', views.profile, name='profile'),
     url(r'^answer$', views.answerMyself, name='answer'),
