@@ -6,6 +6,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 import requests
 import os
+import re
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -98,6 +99,9 @@ def index(request):
 
 @login_required()
 def profile(request):
+    email = request.user.email
+    if not(re.findall("15@", email) or re.findall("16@", email)):
+        return redirect('logout')
     try:
         # add image field edit
         u = request.user
@@ -108,7 +112,7 @@ def profile(request):
             context = {"user": UsrObj}
             return render(request, 'myapp/profile.html', context)
     except:
-        UsrObj = Student(name=request.user.first_name, user=request.user)
+        UsrObj = Student(name=request.user.first_name, user=request.user, email=request.user.email)
         UsrObj.save()
         if request.method == 'GET':
             context = {"user": UsrObj}
