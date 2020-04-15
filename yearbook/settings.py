@@ -42,8 +42,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'oauth2_provider',
     'corsheaders',
+    ## For django-allauth
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 
 ]
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -69,6 +76,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "django.template.context_processors.request",   ## Required by django-allauth
             ],
         },
     },
@@ -107,6 +115,13 @@ DATABASES = {
     #     'PORT': 5432,
     # }
 }
+
+AUTHENTICATION_BACKENDS = (
+    # Default backend -- used to login by username in Django admin
+    "django.contrib.auth.backends.ModelBackend",
+    # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
 
 
 # Password validation
@@ -148,7 +163,7 @@ MEDIA_ROOT=os.path.join(BASE_DIR, 'media/myapp/static/myapp')
 STATIC_ROOT = os.path.join(BASE_DIR, 'myapp/static')
 APPEND_SLASH = True
 FILE_UPLOAD_PERMISSIONS = 0o777
-LOGIN_REDIRECT_URL='/profile/'
+LOGIN_REDIRECT_URL='/profile'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/

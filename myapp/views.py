@@ -98,14 +98,21 @@ def index(request):
 
 @login_required()
 def profile(request):
-    # add image field edit
-    u = request.user
-    UsrObj = Student(name=u.student.name, department=u.student.department,
-            DP=u.student.DP, phone=u.student.phone, email=u.student.email,
-            oneliner=u.student.oneliner, future=u.student.future, genPic1=u.student.genPic1, genPic2=u.student.genPic2)
-    if request.method == 'GET':
-        context = {"user": UsrObj}
-        return render(request, 'myapp/profile.html', context)
+    try:
+        # add image field edit
+        u = request.user
+        UsrObj = Student(name=u.student.name, department=u.student.department,
+                DP=u.student.DP, phone=u.student.phone, email=u.student.email,
+                oneliner=u.student.oneliner, future=u.student.future, genPic1=u.student.genPic1, genPic2=u.student.genPic2)
+        if request.method == 'GET':
+            context = {"user": UsrObj}
+            return render(request, 'myapp/profile.html', context)
+    except:
+        UsrObj = Student(name=request.user.first_name, user=request.user)
+        UsrObj.save()
+        if request.method == 'GET':
+            context = {"user": UsrObj}
+            return render(request, 'myapp/profile.html', context)
     # print int(request.FILES.get('dp').size)<6000000
     if(request.FILES.get('dp') != None and int(request.FILES.get('dp').size) < 6000000):
         # Get the picture
