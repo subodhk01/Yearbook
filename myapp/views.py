@@ -6,6 +6,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 import requests
 import os
+import re
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -98,13 +99,18 @@ def index(request):
 
 @login_required()
 def profile(request):
-    # add image field edit
-    u = request.user
-    UsrObj = Student(name=u.student.name, department=u.student.department,
-            DP=u.student.DP, phone=u.student.phone, email=u.student.email,
-            oneliner=u.student.oneliner, future=u.student.future, genPic1=u.student.genPic1, genPic2=u.student.genPic2)
+    email = request.user.email
+    if not(re.findall("15@", email) or re.findall("16@", email)):
+        user = User.objects.get(email=email)
+        user.delete()
+        return redirect('logout')
+    try:
+        u = request.user.student
+    except:
+        u = Student(name=request.user.first_name, user=request.user, email=request.user.email)
+        u.save()
     if request.method == 'GET':
-        context = {"user": UsrObj}
+        context = {"user": u}
         return render(request, 'myapp/profile.html', context)
     # print int(request.FILES.get('dp').size)<6000000
     if(request.FILES.get('dp') != None and int(request.FILES.get('dp').size) < 6000000):
@@ -112,36 +118,36 @@ def profile(request):
         picture = request.FILES.get('dp')
         # check extension
         if not (picture.name.lower().endswith(('.png', '.jpg', '.jpeg'))):
-            return render(request, 'myapp/profile.html', {"user": UsrObj, "image": "Image should be in .png, .jpg or .jpeg format"})
+            return render(request, 'myapp/profile.html', {"user": u, "image": "Image should be in .png, .jpg or .jpeg format"})
         extension = picture.name.lower()[picture.name.lower().rfind("."):] 
-        picture.name = u.username + extension
-        u.student.DP = picture
+        picture.name = request.user.username + extension
+        u.DP = picture
 
     if(request.FILES.get('genPic1') != None and int(request.FILES.get('genPic1').size) < 6000000):
-        u.student.genPic1 = request.FILES.get('genPic1')
-        if not (u.student.genPic1.name.lower().endswith(('.png', '.jpg', '.jpeg'))):
-            return render(request, 'myapp/profile.html', {"user": UsrObj, "image": "Image should be in .png, .jpg or .jpeg format"})
-        extension = u.student.genPic1.name.lower()[u.student.genPic1.name.lower().rfind("."):] 
+        u.genPic1 = request.FILES.get('genPic1')
+        if not (u.genPic1.name.lower().endswith(('.png', '.jpg', '.jpeg'))):
+            return render(request, 'myapp/profile.html', {"user": u, "image": "Image should be in .png, .jpg or .jpeg format"})
+        extension = u.genPic1.name.lower()[u.genPic1.name.lower().rfind("."):] 
 
-        u.student.genPic1.name = u.username + extension
+        u.genPic1.name = request.user.username + extension
 
     if(request.FILES.get('genPic2') != None and int(request.FILES.get('genPic2').size) < 6000000):
-        u.student.genPic2 = request.FILES.get('genPic2')
-        if not (u.student.genPic2.name.lower().endswith(('.png', '.jpg', '.jpeg'))):
-            return render(request, 'myapp/profile.html', {"user": UsrObj, "image": "Image should be in .png, .jpg or .jpeg format"})
-        extension = u.student.genPic2.name.lower()[u.student.genPic2.name.lower().rfind("."):] 
-        u.student.genPic2.name = u.username + extension
+        u.genPic2 = request.FILES.get('genPic2')
+        if not (u.genPic2.name.lower().endswith(('.png', '.jpg', '.jpeg'))):
+            return render(request, 'myapp/profile.html', {"user": u, "image": "Image should be in .png, .jpg or .jpeg format"})
+        extension = u.genPic2.name.lower()[u.genPic2.name.lower().rfind("."):] 
+        u.genPic2.name = request.user.username + extension
 
-    u.student.name = request.POST.get('name')
-    if len(u.student.name) == 0:
-        return render(request, 'myapp/profile.html', {"user": UsrObj, "name": "Name cannot be empty"})
+    u.name = request.POST.get('name')
+    if len(u.name) == 0:
+        return render(request, 'myapp/profile.html', {"user": u, "name": "Name cannot be empty"})
 
     # Phone email and oneliner can be empty if the user does not wish to specify.
-    u.student.phone = request.POST.get('phone')
-    u.student.email = request.POST.get('email')
-    u.student.oneliner = request.POST.get('oneliner')
-    u.student.future = request.POST.get('future')
-    u.student.save()
+    u.phone = request.POST.get('phone')
+    u.email = request.POST.get('email')
+    u.oneliner = request.POST.get('oneliner')
+    u.future = request.POST.get('future')
+    u.save()
     return redirect('/profile')
 
 
