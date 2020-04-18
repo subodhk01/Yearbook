@@ -100,7 +100,7 @@ def index(request):
 @login_required()
 def profile(request):
     email = request.user.email
-    if not(re.findall("15@", email) or re.findall("16@", email) or re.findall("19@", email)):
+    if not(re.findall("15@", email) or re.findall("16@", email)):
         user = User.objects.get(email=email)
         user.delete()
         return redirect('logout')
@@ -110,7 +110,10 @@ def profile(request):
         UsrObj = Student(name=request.user.first_name, user=request.user, email=request.user.email)
         UsrObj.save()
     if request.method == 'GET':
-        context = {"user": u}
+        try:
+            context = {"user": u}
+        except:
+            context = {"user": UsrObj}
         return render(request, 'myapp/profile.html', context)
     # print int(request.FILES.get('dp').size)<6000000
     if(request.FILES.get('dp') != None and int(request.FILES.get('dp').size) < 6000000):
@@ -129,7 +132,7 @@ def profile(request):
             return render(request, 'myapp/profile.html', {"user": u, "image": "Image should be in .png, .jpg or .jpeg format"})
         extension = u.genPic1.name.lower()[u.genPic1.name.lower().rfind("."):] 
 
-        request.user.student.genPic1.name = request.user.username + extension
+        u.genPic1.name = request.user.username + extension
 
     if(request.FILES.get('genPic2') != None and int(request.FILES.get('genPic2').size) < 6000000):
         u.genPic2 = request.FILES.get('genPic2')
