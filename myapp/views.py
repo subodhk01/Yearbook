@@ -107,13 +107,10 @@ def profile(request):
     try:
         u = request.user.student
     except:
-        UsrObj = Student(name=request.user.first_name, user=request.user, email=request.user.email)
-        UsrObj.save()
+        u = Student(name=request.user.first_name, user=request.user, email=request.user.email)
+        u.save()
     if request.method == 'GET':
-        try:
-            context = {"user": u}
-        except:
-            context = {"user": UsrObj}
+        context = {"user": u}
         return render(request, 'myapp/profile.html', context)
     # print int(request.FILES.get('dp').size)<6000000
     if(request.FILES.get('dp') != None and int(request.FILES.get('dp').size) < 6000000):
