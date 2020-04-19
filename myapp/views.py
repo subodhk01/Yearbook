@@ -100,14 +100,16 @@ def index(request):
 @login_required()
 def profile(request):
     email = request.user.email
-    if not(re.findall("15@", email) or re.findall("16@", email)):
+    if not(re.findall("15@", email) or re.findall("16@", email) or re.findall("19@", email)):
         user = User.objects.get(email=email)
         user.delete()
         return redirect('logout')
     try:
         u = request.user.student
     except:
-        u = Student(name=request.user.first_name, user=request.user, email=request.user.email)
+        query = r"(?<=\.)(.*)(?=\@)"
+        branch = str(re.search(r"(?<=\.)(.*)(?=\@)", email).group(0))[-5:-2]
+        u = Student(name=request.user.first_name, user=request.user, email=request.user.email, department=branch)
         u.save()
     if request.method == 'GET':
         context = {"user": u}
