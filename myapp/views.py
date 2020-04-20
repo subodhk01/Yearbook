@@ -107,13 +107,17 @@ def profile(request):
     try:
         u = request.user.student
     except:
-        u = Student(name=request.user.first_name, user=request.user, email=request.user.email)
+        query = r"(?<=\.)(.*)(?=\@)"
+        branch = str(re.search(r"(?<=\.)(.*)(?=\@)", email).group(0))[-5:-2]
+        u = Student(name=request.user.first_name, user=request.user, email=request.user.email, department=branch)
         u.save()
     if request.method == 'GET':
         context = {"user": u}
         return render(request, 'myapp/profile.html', context)
     # print int(request.FILES.get('dp').size)<6000000
-    if(request.FILES.get('dp') != None and int(request.FILES.get('dp').size) < 6000000):
+    if(request.FILES.get('dp') != None):
+        if( int(request.FILES.get('dp').size) > 2000000 ):
+            return render(request, 'myapp/profile.html', {"user": u, "image": "Image size should be less than 2mb"})
         # Get the picture
         picture = request.FILES.get('dp')
         # check extension
@@ -123,7 +127,9 @@ def profile(request):
         picture.name = request.user.username + extension
         u.DP = picture
 
-    if(request.FILES.get('genPic1') != None and int(request.FILES.get('genPic1').size) < 6000000):
+    if(request.FILES.get('genPic1') != None):
+        if( int(request.FILES.get('genPic1').size) > 2000000 ):
+            return render(request, 'myapp/profile.html', {"user": u, "image": "Image size should be less than 2mb"})
         u.genPic1 = request.FILES.get('genPic1')
         if not (u.genPic1.name.lower().endswith(('.png', '.jpg', '.jpeg'))):
             return render(request, 'myapp/profile.html', {"user": u, "image": "Image should be in .png, .jpg or .jpeg format"})
@@ -131,7 +137,9 @@ def profile(request):
 
         u.genPic1.name = request.user.username + extension
 
-    if(request.FILES.get('genPic2') != None and int(request.FILES.get('genPic2').size) < 6000000):
+    if(request.FILES.get('genPic2') != None):
+        if( int(request.FILES.get('genPic2').size) > 2000000 ):
+            return render(request, 'myapp/profile.html', {"user": u, "image": "Image size should be less than 2mb"})
         u.genPic2 = request.FILES.get('genPic2')
         if not (u.genPic2.name.lower().endswith(('.png', '.jpg', '.jpeg'))):
             return render(request, 'myapp/profile.html', {"user": u, "image": "Image should be in .png, .jpg or .jpeg format"})
