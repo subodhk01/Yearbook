@@ -75,7 +75,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-ROOT_URLCONF = 'yearbook.urls'
+ROOT_URLCONF = 'Yearbook.urls'
 
 TEMPLATES = [
     {
@@ -94,7 +94,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'yearbook.wsgi.application'
+WSGI_APPLICATION = 'Yearbook.wsgi.application'
 
 
 # Database
