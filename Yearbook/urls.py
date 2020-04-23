@@ -20,7 +20,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     # url(r'^$', RedirectView.as_view(url='/yearbook/profile')),
-    url(r'^admin/', admin.site.urls),
+    url(r'^nimda/', admin.site.urls),
     url('', include('myapp.urls')),
     url(r'^accounts/', include('allauth.urls')),
     #url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
