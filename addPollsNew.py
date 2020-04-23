@@ -1,8 +1,8 @@
 import django
 import csv
 ####
-#import os
-#os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Yearbook.settings')
+import os
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Yearbook.settings')
 ####
 django.setup()
 from myapp.models import *
