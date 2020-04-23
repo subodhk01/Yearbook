@@ -31,7 +31,7 @@ with open("form_new.csv", "rU") as file:
         print(username, email, user_passwd)
         #u = User.objects.create_user(username=username, password=user_passwd ,email=email)
         #u.save()
-        s = Student(name=col[0], department= dep)
+        s = Student(name=col[0], department= dep, email=email)
         #u.student = s
         #u.student.save()
         #u = User(username=username, password=user_passwd, email=email)
