@@ -14,17 +14,24 @@ class GenQuestion(models.Model):
 
 class Poll(models.Model):
 	departments = [
-		("chemical", "chemical"),
-		("civil", "civil"),
+		("che", "chemical"),
+		("cer", "ceramic"),
+		("civ", "civil"),
 		("cse", "computer science"),
 		("eee", "electrical"),
-		("maths", "mathematics"),
 		("ece", "electronics"),
-		("mech", "mechanical"),
-		("physics", "engineering physics"),
-		("textile", "textile engineering"),
-		("dbeb", "biotechnology"),
-		("all", "all"),
+		("mat", "mathematics"),
+		("mec", "mechanical"),
+		("min", "mining"),
+		("phe", "pharma"),
+		("apc", "chemistry"),
+		("met", "metallurgy"),
+		("mst", "material"),
+		("hss", "humanities"),
+		("phy", "physics"),
+		("bce", "biotechnology"),
+		("bme", "biotechnology"),
+		("all", "all")
 	]
 	poll = models.CharField(max_length=200)
 	department = models.CharField(max_length=200,choices=departments)
@@ -34,16 +41,23 @@ class Poll(models.Model):
 
 class Student(models.Model):
 	departments = [
-		("chemical", "chemical"),
-		("civil", "civil"),
+		("che", "chemical"),
+		("cer", "ceramic"),
+		("civ", "civil"),
 		("cse", "computer science"),
 		("eee", "electrical"),
 		("ece", "electronics"),
-		("maths", "mathematics"),
-		("mech", "mechanical"),
-		("physics", "engineering physics"),
-		("textile", "textile engineering"),
-		("dbeb", "biotechnology"),
+		("mat", "mathematics"),
+		("mec", "mechanical"),
+		("min", "mining"),
+		("phe", "pharma"),
+		("apc", "chemistry"),
+		("met", "metallurgy"),
+		("mst", "material"),
+		("hss", "humanities"),
+		("phy", "physics"),
+		("bce", "biotechnology"),
+		("bme", "biotechnology"),
 		("all", "all")
 	]
 	user = models.OneToOneField(User, on_delete=models.CASCADE)

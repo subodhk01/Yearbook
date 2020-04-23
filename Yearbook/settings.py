@@ -52,6 +52,7 @@ INSTALLED_APPS = [
 ]
 SITE_ID = 1
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = "email"
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': [
@@ -63,6 +64,9 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+SOCIALACCOUNT_ADAPTER = 'myapp.adapter.SocialAccountAdapter'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
