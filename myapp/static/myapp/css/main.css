@@ -212,7 +212,7 @@ iframe {
     /*overflow: hidden;*/
     /*overflow-wrap: break-word;*/
     word-wrap: break-word;
-  
+    margin: 10px;
     box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
     -webkit-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
@@ -230,7 +230,7 @@ iframe {
     /*overflow: hidden;*/
     /*overflow-wrap: break-word;*/
     word-wrap: break-word;
-  
+    margin: 10px;
     box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
     -webkit-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
