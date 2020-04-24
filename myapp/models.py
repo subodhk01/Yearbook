@@ -44,8 +44,8 @@ class Poll(models.Model):
 		("phy-idd", "physics IDD"),
 		("bce", "biotechnology"),
 		("bce-idd", "biotechnology IDD"),
-		("bme", "biotechnology"),
-		("bme-idd", "biotechnology IDD"),
+		("bme", "biomedical"),
+		("bme-idd", "biomedical IDD"),
 		("all", "all")
 	]
 	poll = models.CharField(max_length=200)
@@ -86,8 +86,8 @@ class Student(models.Model):
 		("phy-idd", "physics IDD"),
 		("bce", "biotechnology"),
 		("bce-idd", "biotechnology IDD"),
-		("bme", "biotechnology"),
-		("bme-idd", "biotechnology IDD"),
+		("bme", "biomedical"),
+		("bme-idd", "biomedical IDD"),
 		("all", "all")
 	]
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
