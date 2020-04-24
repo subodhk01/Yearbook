@@ -110,7 +110,7 @@ def profile(request):
     except:
         query = r"(?<=\.)(.*)(?=\@)"
         branch = str(re.search(r"(?<=\.)(.*)(?=\@)", email).group(0))[-5:-2]
-        if(re.findall("15@", email)):
+        if("15@" in email):
             branch += "-idd"
         u = Student(name=request.user.first_name, user=request.user, email=request.user.email, department=branch)
         u.save()
