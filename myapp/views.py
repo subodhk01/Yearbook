@@ -108,8 +108,11 @@ def profile(request):
     try:
         u = request.user.student
     except:
+        IDDyear = "15"
         query = r"(?<=\.)(.*)(?=\@)"
         branch = str(re.search(r"(?<=\.)(.*)(?=\@)", email).group(0))[-5:-2]
+        if(IDDyear+"@" in email):
+            branch += "-idd"
         u = Student(name=request.user.first_name, user=request.user, email=request.user.email, department=branch)
         u.save()
     if request.method == 'GET':
