@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{% block title %}Profile{% endblock %}</title>
 	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="{% static 'myapp/css/main.css'%}">
@@ -55,7 +56,7 @@
 					</center>
 			</div>
 
-			<div class="wrap-login100 p-l-55 p-r-55 p-t-50 p-b-30">
+			<div class="wrap-login100 p-l-25 p-r-25 p-t-50 p-b-30">
 			<form class="login100-form validate-form" method="POST" enctype="multipart/form-data">
 					{% csrf_token %}
 					<span class="login100-form-title p-b-35">
@@ -69,11 +70,8 @@
 					<p style="text-align: center; color: red">{{name}}</p>
 
 					<div class="wrap-input100 validate-input m-b-20 m-t-20">
-						<input style="color: black;background-color: #e0e0e0; border-radius: 20px 20px 0 0" class="input100" type="text" name="name" placeholder="Name"  value="{{ user.name }}" readonly="readonly">
+						<input style="color: black;background-color: #e0e0e0; border-radius: 20px" class="input100" type="text" name="name" placeholder="Name"  value="{{ user.name }}" readonly="readonly">
 						<span class="focus-input100"></span>
-	<p style="text-align: center; color: #4b2354">
-					 For 2015 Entry Only
-				</p>
 					</div>
 					<div class="wrap-input100 validate-input m-b-20">
 						<label style="color: #adabab;padding-left: 20px">Profile Picture: (max size 2MB) </label>
@@ -82,7 +80,7 @@
 					</div>
 					<div class="wrap-input100 validate-input m-b-20">
 						<span  class="focus-input100"></span>
-						<input style="color: black;background-color: #e0e0e0; border-radius: 20px" class="input100" type="text" name="department" placeholder="Department"  value="{{ user.department }}" readonly="readonly">
+						<input style="color: black;background-color: #e0e0e0; border-radius: 20px" class="input100" type="text" name="department" placeholder="Department"  value="{{ user.get_department_display }}" readonly="readonly">
 					</div>
 					<div class="wrap-input100 validate-input m-b-20">
 						<input class="input100" type="text" name="phone" placeholder="Phone"  value="{{ user.phone }}">
