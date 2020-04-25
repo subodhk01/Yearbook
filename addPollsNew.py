@@ -38,8 +38,8 @@ depts = [
 		("hss", "humanities"),
 		("phy", "physics"),
 		("phy-idd", "physics IDD"),
-		("bce", "biotechnology"),
-		("bce-idd", "biotechnology IDD"),
+		("bce", "biochemical"),
+		("bce-idd", "biochemical IDD"),
 		("bme", "biomedical"),
 		("bme-idd", "biomedical IDD"),
 	]

@@ -42,8 +42,8 @@ class Poll(models.Model):
 		("hss", "humanities"),
 		("phy", "physics"),
 		("phy-idd", "physics IDD"),
-		("bce", "biotechnology"),
-		("bce-idd", "biotechnology IDD"),
+		("bce", "biochemical"),
+		("bce-idd", "biochemical IDD"),
 		("bme", "biomedical"),
 		("bme-idd", "biomedical IDD"),
 		("all", "all")
@@ -84,8 +84,8 @@ class Student(models.Model):
 		("hss", "humanities"),
 		("phy", "physics"),
 		("phy-idd", "physics IDD"),
-		("bce", "biotechnology"),
-		("bce-idd", "biotechnology IDD"),
+		("bce", "biochemical"),
+		("bce-idd", "biochemical IDD"),
 		("bme", "biomedical"),
 		("bme-idd", "biomedical IDD"),
 		("all", "all")
