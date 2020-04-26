@@ -172,7 +172,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-MEDIA_URL = '/myapp/media/'
+MEDIA_URL = '/media/'
 STATIC_URL = '/myapp/static/'
 MEDIA_ROOT=os.path.join(BASE_DIR, 'media/myapp/static/myapp')
 #MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
