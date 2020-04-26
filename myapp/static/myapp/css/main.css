@@ -613,4 +613,11 @@ input:-webkit-autofill {
   text-align: center;
   font-family: SourceSansPro-SemiBold;
 }
+
+.navbar-container {
+  width: 100%;
+}
+.navbar-container a {
+  color: white !important;
+}
   

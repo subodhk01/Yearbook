@@ -11,37 +11,40 @@
 <body>
 
 	{% block topbar %}
-	<nav style="background: rgba(200,200,200,0.5);
-/*  background: -webkit-linear-gradient(left, rgba(0,168,255,0.5), rgba(185,0,255,0.5));
-  background: -o-linear-gradient(left, rgba(0,168,255,0.5), rgba(185,0,255,0.5));
-  background: -moz-linear-gradient(left, rgba(0,168,255,0.5), rgba(185,0,255,0.5));
-  background: linear-gradient(left, rgba(0,168,255,0.5), rgba(185,0,255,0.5));*/ position: relative; width: 100%" class="navbar navbar-expand-sm bg-dark navbar-dark">
-	  <!-- Links -->
-	  <ul style="color:white !important;" class="navbar-nav">
-	    <li class="nav-item">
-			<a class="nav-link" href="/profile" style="color:white">Profile</a>
-	    </li>
-	    <li class="nav-item">
-			<a class="nav-link" href="/otherComment" style="color:white">Received comments</a>
-	    </li>
-	    <li class="nav-item">
-			<a class="nav-link" href="/comment" style="color:white">Write Comments</a>
-	    </li>
-	    <li class="nav-item">
-			<a class="nav-link" href="/answer" style="color:white">About You</a>
-	    </li>
-	    <li class="nav-item">
-			<a class="nav-link" href="/poll" style="color:white">Poll</a>
-	    </li>
-			<a class="nav-link" href="/yearbook" style="color:white">Yearbook</a>
-<!-- 	    </li> -->
+	<div class="navbar-container">
+		<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+			<a class="navbar-brand" href="#"></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+			  <span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			  <ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" href="/profile">Profile</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/otherComment">Received comments</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/comment">Write Comments</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/answer">About You</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/poll">Poll</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/yearbook">Yearbook</a>
+				</li>
+				<li style="position:absolute; right: 5%" class="nav-item">
+					<a class="nav-link" href="/logout">Logout</a>
+			   </li>
+			  </ul>
+			</div>
+		  </nav>
+	</div>
 
-
- 	    <li style="position:absolute; right: 5%" class="nav-item">
-		 	<a class="nav-link" href="/logout" style="color:white">Logout</a>
-	    </li>
-	  </ul>
-	</nav>
 	{% endblock %}
 	<div class="container-login100">
 		{% block body %}
@@ -136,6 +139,10 @@
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
+  <script 
+  	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
+	crossorigin="anonymous"></script>
   <script type="text/javascript">
   	$('input[type=file]').bind('change', function() {
 
