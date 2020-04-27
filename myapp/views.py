@@ -191,7 +191,9 @@ def get_poll_display(polls, VotesDisplay):
     for p in polls:
         try:
             existingVote = VotesDisplay[str(p.id)]
-        except KeyError:
+            if not isinstance(existingVote, dict):
+                raise TypeError
+        except (KeyError, TypeError):
             existingVote = {
                 'username': '',
                 'name': ''
@@ -233,7 +235,7 @@ def poll(request):
             # Attempt and remove previous vote of current user for this poll
             oldVotePresent = VotesDisplay[str(poll.id)]['username']
             poll.votes[oldVotePresent] -= 1
-        except KeyError:
+        except (KeyError, TypeError):
             pass
         otherUser = None
         try:
