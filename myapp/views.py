@@ -100,7 +100,7 @@ def index(request):
 @login_required()
 def profile(request):
     email = request.user.email
-    exceptions = ['akul.gupta.phe17@itbhu.ac.in','subodh.verma.min19@itbhu.ac.in']
+    exceptions = ['akul.gupta.phe17@itbhu.ac.in','subodh.verma.min19@itbhu.ac.in','vijay.psingh.chy14@itbhu.ac.in']
     if not(re.findall("15@", email) or re.findall("16@", email)) and not(email in exceptions):
         user = User.objects.get(email=email)
         user.delete()
