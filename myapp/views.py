@@ -203,6 +203,7 @@ def get_poll_display(polls, VotesDisplay):
 @login_required()
 def poll(request):
     u = request.user
+    VotesDisplay = u.student.VotesIHaveGiven
     if request.method == 'GET':
         users_all = User.objects.filter(is_superuser=False, student__isnull=False).order_by('username')
         # Same dept users
@@ -210,7 +211,6 @@ def poll(request):
 
         allPolls = Poll.objects.filter(department="all")
         deptPolls = Poll.objects.filter(department=u.student.department)
-        VotesDisplay = u.student.VotesIHaveGiven
 
         gen_allPolls = get_poll_display(allPolls, VotesDisplay)
         gen_deptPolls = get_poll_display(deptPolls, VotesDisplay)
@@ -223,7 +223,6 @@ def poll(request):
     polls = Poll.objects.filter(
         id__in=request.POST.getlist('id[]')
     ).select_for_update()
-    print(entries, polls)
     # Fundamental check for double loops
     for (entry, poll) in zip(entries, polls):
         lowerEntry = entry.lower()
@@ -231,7 +230,7 @@ def poll(request):
             continue
         try:
             # Attempt and remove previous vote of current user for this poll
-            oldVotePresent = u.student.VotesIHaveGiven[str(poll.id)]
+            oldVotePresent = VotesDisplay[str(poll.id)]['username']
             poll.votes[oldVotePresent] -= 1
         except KeyError:
             pass
