@@ -186,77 +186,74 @@ def answerMyself(request):
         u.student.save()
     return redirect('/answer')
 
+def get_poll_display(polls, VotesDisplay):
+    result = []
+    for p in polls:
+        try:
+            existingVote = VotesDisplay[str(p.id)]
+        except KeyError:
+            existingVote = {
+                'username': '',
+                'name': ''
+            }
+        result.append([p.id, p.poll, existingVote['username'], existingVote['name']])
+    return result
+
 
 @login_required()
 def poll(request):
     u = request.user
     if request.method == 'GET':
-        enum_to_name = {}
-        users_all = User.objects.filter(is_superuser=False).order_by('username')
-        
-        dept_users = []
-        users = [] # made seperate for same year vote only
-
-        for i in users_all:
-            enum_to_name[i.username] = i.student.name
-            #if i.username[:4] == u.username[:4]:
-            users.append(i)
-            if i.student.department==u.student.department:
-                dept_users.append(i)
+        users_all = User.objects.filter(is_superuser=False, student__isnull=False).order_by('username')
+        # Same dept users
+        dept_users = users_all.filter(student__department=u.student.department)
 
         allPolls = Poll.objects.filter(department="all")
         deptPolls = Poll.objects.filter(department=u.student.department)
         VotesDisplay = u.student.VotesIHaveGiven
-        gen_allPolls=[]
-        gen_deptPolls=[]
-        
-        for p in allPolls:
-            gen_allPolls.append([p.id,p.poll,"", ""])
-            if (str(p.id) in VotesDisplay):
-                gen_allPolls[-1][2]=VotesDisplay[str(p.id)]
-                gen_allPolls[-1][3]=enum_to_name.get(VotesDisplay[str(p.id)], "")
-                
-        for p in deptPolls:
-            gen_deptPolls.append([p.id,p.poll,"", ""])
-            if (str(p.id) in VotesDisplay):
-                gen_deptPolls[-1][2]=VotesDisplay[str(p.id)]
-                gen_deptPolls[-1][3]=(enum_to_name.get(VotesDisplay[str(p.id)], ""))
-        context={"allPolls":gen_allPolls, "deptPolls":gen_deptPolls,"users":users,"deptUsers":dept_users}
+
+        gen_allPolls = get_poll_display(allPolls, VotesDisplay)
+        gen_deptPolls = get_poll_display(deptPolls, VotesDisplay)
+        context={"allPolls":gen_allPolls, "deptPolls":gen_deptPolls,"users":users_all,"deptUsers":dept_users}
         return render(request, 'myapp/poll.html',context)
 
-    # if POST request 
+    # if POST request
     # print request.POST.getlist('entrynumber[]')
-    for i in range(len(request.POST.getlist('entrynumber[]'))):
-        fetchPoll = ""
-        if Poll.objects.filter(id = request.POST.getlist('id[]')[i]).exists():
-            fetchPoll = Poll.objects.get(id = request.POST.getlist('id[]')[i])
-        else:
-            return redirect("/poll")
-        if (request.POST.getlist('id[]')[i] in u.student.VotesIHaveGiven):
-            OldVotePresent = u.student.VotesIHaveGiven[request.POST.getlist('id[]')[i]]
-            if(OldVotePresent in fetchPoll.votes):
-                fetchPoll.votes[OldVotePresent] = fetchPoll.votes[OldVotePresent] - 1   
-        
-        lowerEntry = (request.POST.getlist('entrynumber[]')[i]).lower()
-        if(lowerEntry in fetchPoll.votes):
-            if ((lowerEntry != u.username.lower())):
-                fetchPoll.votes[lowerEntry] = fetchPoll.votes[lowerEntry] + 1   
+    entries = request.POST.getlist('entrynumber[]')
+    polls = Poll.objects.filter(
+        id__in=request.POST.getlist('id[]')
+    ).select_for_update()
+    print(entries, polls)
+    # Fundamental check for double loops
+    for (entry, poll) in zip(entries, polls):
+        lowerEntry = entry.lower()
+        if lowerEntry == u.username.lower():
+            continue
+        try:
+            # Attempt and remove previous vote of current user for this poll
+            oldVotePresent = u.student.VotesIHaveGiven[str(poll.id)]
+            poll.votes[oldVotePresent] -= 1
+        except KeyError:
+            pass
+        otherUser = None
+        try:
+            otherUser = User.objects.get(username=lowerEntry)
+        except:
+            continue
+        try:
+            # otherUser already has votes, incremement it
+            poll.votes[lowerEntry] += 1
+        except KeyError:
+            if (poll.department.lower() == 'all') or (poll.department == otherUser.student.department):
+                poll.votes[lowerEntry] = 1
             else:
-                return redirect("/poll")
-        else:
-            # A not found check for poll and Cannot vote oneself
-            if (User.objects.filter(username = lowerEntry).exists() and (lowerEntry != u.username.lower())):
-                toVoteDepartment = (User.objects.get(username=lowerEntry)).student.department
-                if (((fetchPoll.department.lower() == "all") or (fetchPoll.department.lower() == toVoteDepartment.lower())) and (lowerEntry[0:4] == u.username[0:4])):      
-                    fetchPoll.votes[lowerEntry] = 1
-                else:
-                    return redirect("/poll")        
-            #else:
-            #    return redirect("/poll")
-        if(lowerEntry != u.username.lower()):
-            u.student.VotesIHaveGiven[request.POST.getlist('id[]')[i]] = lowerEntry     
-        fetchPoll.save()
-        u.student.save()
+                continue
+        u.student.VotesIHaveGiven[str(poll.id)] = {
+            'username': lowerEntry,
+            'name': otherUser.student.name
+        }
+        poll.save(update_fields=('votes',))
+        u.student.save(update_fields=('VotesIHaveGiven',))
     return redirect("/poll")
         
 @login_required()
