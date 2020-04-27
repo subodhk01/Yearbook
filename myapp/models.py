@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 def user_directory_path(instance, filename):
 	return '{0}/{1}'.format(instance.department, filename)
-# Create your models here.
+
 class GenQuestion(models.Model):
 	question = models.CharField(max_length=200)
 	def __str__(self):
@@ -49,8 +49,9 @@ class Poll(models.Model):
 		("all", "all")
 	]
 	poll = models.CharField(max_length=200)
-	department = models.CharField(max_length=200,choices=departments)
-	votes = JSONField(blank=True,default=dict)
+	department = models.CharField(max_length=200,choices=departments, db_index=True)
+	votes = JSONField(blank=True, default=dict)
+
 	def __str__(self):
 		return self.poll
 
@@ -90,9 +91,9 @@ class Student(models.Model):
 		("bme-idd", "biomedical IDD"),
 		("all", "all")
 	]
-	user = models.OneToOneField(User, on_delete=models.CASCADE)
+	user = models.OneToOneField(User, on_delete=models.CASCADE, db_index=True)
 	name = models.CharField(max_length=100,blank=True)
-	department = models.CharField(max_length=100,choices=departments)
+	department = models.CharField(max_length=100,choices=departments, db_index=True)
 	DP = models.ImageField(upload_to="DP",blank=True,default="DP/anonymous.jpg")
 	genPic1 = models.ImageField(upload_to=user_directory_path,blank=True)
 	genPic2 = models.ImageField(upload_to=user_directory_path,blank=True)
@@ -103,7 +104,8 @@ class Student(models.Model):
 	AnswersAboutMyself = JSONField(blank=True,default=dict)
 	VotesIHaveGiven = JSONField(blank=True,default=dict)
 	CommentsIWrite = JSONField(blank=True,default=list)
-	CommentsIGet = JSONField(blank=True,default=list)
+	CommentsIGet = JSONField(blank=True, default=list)
+
 	def __str__(self):
 		return self.name 
 
