@@ -223,6 +223,7 @@ def poll(request):
     polls = Poll.objects.filter(
         id__in=request.POST.getlist('id[]')
     ).select_for_update()
+    print(entries, polls)
     # Fundamental check for double loops
     for (entry, poll) in zip(entries, polls):
         lowerEntry = entry.lower()
