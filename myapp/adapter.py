@@ -19,6 +19,5 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
 
         user = email_address
         user.first_name = sociallogin.account.extra_data['given_name']
-        user.last_name = sociallogin.account.extra_data['family_name']
         user.save()
         sociallogin.connect(request, user)
