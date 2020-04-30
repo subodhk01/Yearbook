@@ -397,6 +397,7 @@ def yearbook(request):
         i.AnswersAboutMyself=list(gen_GenQuestions)
 
         gen_commentsIGet=list([])
+        '''
         for a in i.CommentsIGet:
             if(User.objects.filter(username=a['fromWhom']).exists() and a['comment']!="" and a['displayInPdf']=="True"):
                 gen_commentsIGet.append([])
@@ -407,6 +408,7 @@ def yearbook(request):
                         gen_commentsIGet[-1] = [a['comment'],""]
                 else:
                     gen_commentsIGet[-1] = [a['comment'],""]
+        '''
 
         i.CommentsIGet=list(gen_commentsIGet)
 
@@ -436,7 +438,7 @@ def yearbook(request):
         if ind!=0:
             dep_polls.append([p.poll,tmpVotes[0:ind]])
 
-    context={"students":students_dep,"department":departmentN,"allPolls":all_polls,"deptPolls":dep_polls,"showComments":False}
+    context={"students":students_dep,"department":departmentN,"allPolls":all_polls,"deptPolls":dep_polls,}
     return render(request, 'myapp/yearbook.html',context)
    
 
