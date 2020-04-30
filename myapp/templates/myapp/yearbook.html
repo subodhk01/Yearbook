@@ -131,21 +131,24 @@
 
             </section><!--//section-->
 
-            <section class="section experiences-section">
-                <h2 class="section-title"><i class="fa fa-list-ol"></i>What others have written for you</h2>
-				                
-                {% for comment,fromWhom in student.CommentsIGet %}
-                    <div class="item" style="word-wrap: break-word; page-break-inside: avoid;">
-                        <div class="meta">
-                            <div class="upper-row">
-                                <h3 class="job-title">{{fromWhom}}</h3>
+            {% if showComments %}
+                <section class="section experiences-section">
+                    <h2 class="section-title"><i class="fa fa-list-ol"></i>What others have written for you</h2>
+                                    
+                    {% for comment,fromWhom in student.CommentsIGet %}
+                        <div class="item" style="word-wrap: break-word; page-break-inside: avoid;">
+                            <div class="meta">
+                                <div class="upper-row">
+                                    <h3 class="job-title">{{fromWhom}}</h3>
+                                </div>
+                            </div>
+                            <div class="details">
+                                <p>{{comment}}</p>
                             </div>
                         </div>
-                        <div class="details">
-                            <p>{{comment}}</p>
-                        </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </section>
+            {% endif %}
         </div>
     </div>
     {% endfor %}

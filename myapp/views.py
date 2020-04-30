@@ -336,35 +336,56 @@ def otherComment(request):
                 break
         u.student.save()
     return redirect('/otherComment')
+
+
 @login_required()
 def yearbook(request):
     dep="eee"
     departmentDic={
-            "chemical": "chemical",
-            "civil": "civil",
-            "cse": "Computer Science",
-            "eee": "electrical",
-            "ece": "electronics",
-            "maths": "mathematics",
-            "mech": "mechanical",
-            "physics": "engineering physics",
-            "textile": "textile engineering",
-            "dbeb": "biotechnology",
+            "che": "Chemical",
+            "che-idd": "Chemical IDD",
+            "cer": "Ceramic",
+            "cer-idd": "Ceramic IDD",
+            "civ": "Civil",
+            "civ-idd": "Civil IDD",
+            "cse": "Computer Ccience",
+            "cse-idd": "Computer Ccience IDD",
+            "eee": "Electrical",
+            "eee-idd": "Electrical IDD",
+            "ece": "Electronics",
+            "mat": "Mathematics",
+            "mat-idd": "Mathematics IDD",
+            "mec": "Mechanical",
+            "mec-idd": "Mechanical IDD",
+            "min": "Mining",
+            "min-idd": "Mining IDD",
+            "phe": "Pharma",
+            "phe-idd": "Pharma IDD",
+            "chy": "Chemistry",
+            "chy-idd": "Chemistry IDD",
+            "met": "Metallurgy",
+            "met-idd": "Metallurgy IDD",
+            "mst": "Material",
+            "mst-idd": "Material IDD",
+            "hss": "humanities",
+            "phy": "Physics",
+            "phy-idd": "Physics IDD",
+            "bce": "Biotechnology",
+            "bce-idd": "Biotechnology IDD",
+            "bme": "Biomedical",
+            "bme-idd": "Biomedical IDD",
             "all": "all"
-        }
+    }
     # if request.user.is_superuser:
     #     dep = request.GET.get('department')
     # else:
-    dep = "eee"
+    dep = request.user.student.department
         
     departmentN=""
     if dep in departmentDic:
         departmentN = departmentDic[dep]
     else:
         departmentN = "all"
-    # dep="cse"
-    print(dep)
-    print(request.user.student.department)
     GenQuestions = GenQuestion.objects.all()
     students_dep = Student.objects.filter(department=dep)
     for i in students_dep:
@@ -397,6 +418,7 @@ def yearbook(request):
             if(User.objects.filter(username=person).exists()):
                 Person=User.objects.filter(username=person)[0].student.name
             tmpVotes.append([int(count),Person])
+        print(tmpVotes)
         tmpVotes.sort(reverse=True)
         ind = min(5,len(tmpVotes))
         if ind!=0:
@@ -414,7 +436,7 @@ def yearbook(request):
         if ind!=0:
             dep_polls.append([p.poll,tmpVotes[0:ind]])
 
-    context={"students":students_dep,"department":departmentN,"allPolls":all_polls,"deptPolls":dep_polls}
+    context={"students":students_dep,"department":departmentN,"allPolls":all_polls,"deptPolls":dep_polls,"showComments":False}
     return render(request, 'myapp/yearbook.html',context)
    
 
