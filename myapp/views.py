@@ -209,7 +209,7 @@ def poll(request):
     u = request.user
     VotesDisplay = u.student.VotesIHaveGiven
     if request.method == 'GET':
-        users_all = User.objects.filter(is_superuser=False, student__isnull=False).order_by('username')
+        users_all = User.objects.filter(is_superuser=False)
         # Same dept users
         dept_users = users_all.filter(student__department=u.student.department)
 
@@ -263,14 +263,14 @@ def poll(request):
 @login_required()
 def comment(request):
     u = request.user
-    users_all = User.objects.filter(is_superuser=False).order_by('username') 
+    users_all = User.objects.filter(is_superuser=False)
         # we pass this to display options, remove self user
     myComments = u.student.CommentsIWrite
     gen_comments = []
     for c in myComments:
         tmpName=c["forWhom"]
-        if User.objects.filter(username = c["forWhom"]).exists():
-            tmpName=User.objects.get(username=c["forWhom"]).student.name
+        if users_all.filter(username = c["forWhom"]).exists():
+            tmpName=users_all.get(username=c["forWhom"]).student.name
         if not (  "showNameinPDF" in c):
             c["showNameinPDF"]="False"    
         gen_comments.append([c["comment"],c["forWhom"],tmpName,c["showNameinPDF"]])
@@ -287,8 +287,8 @@ def comment(request):
                 else:
                     c["showNameinPDF"]=request.POST.getlist('show[]')[i]
                 # A not found check for the user
-                if (User.objects.filter(username = lowerEntry).exists() and (u.username.lower() != lowerEntry)):
-                    u_new = User.objects.get(username=lowerEntry) 
+                if (users_all.filter(username = lowerEntry).exists() and (u.username.lower() != lowerEntry)):
+                    u_new = users_all.get(username=lowerEntry) 
                 else:
                     return redirect('/comment')
                 for c_new in u_new.student.CommentsIGet:
@@ -303,10 +303,10 @@ def comment(request):
             # A not found check of user and I cant comment for myself
             if (u.username.lower() == lowerEntry):
                 return render(request, 'myapp/comment.html', {"comments":gen_comments,"users":users_all, "comment": "You can't comment for yourself :)"})
-            if (User.objects.filter(username = lowerEntry).exists()):
-                u_new = User.objects.get(username=lowerEntry)
+            if (users_all.filter(username = lowerEntry).exists()):
+                u_new = users_all.get(username=lowerEntry)
             else:
-                print (User.objects.filter(username = lowerEntry).exists())
+                #print (users_all.filter(username = lowerEntry).exists())
                 return redirect('/comment')
             u_new.student.CommentsIGet.append({"comment":request.POST.getlist('val[]')[i],"fromWhom":u.username,"displayInPdf":"True","showNameinPDF":""+request.POST.getlist('show[]')[i] })
             u_new.student.save()
