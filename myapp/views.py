@@ -7,6 +7,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 import requests
 import os
 import re
+import logging
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -110,18 +111,16 @@ def profile(request):
     try:
         u = request.user.student
     except:
-        IDDyear = "15"
+        IDDyear = "19"
         query = r"(?<=\.)(.*)(?=\@)"
         branch = str(re.search(r"(?<=\.)(.*)(?=\@)", email).group(0))[-5:-2]
         if(IDDyear+"@" in email):
-            ####### Temporary
-            user = User.objects.get(email=email)
-            try:   
-                r = requests.get('http://kyukey-lock.herokuapp.com/a2oj/'+ str(email))
+            try:
+                logging.basicConfig(filename='year15.log',level=logging.INFO)
+                logging.info(email)
             except:
                 pass
             return redirect('logout')
-            ####### Temporary
             branch += "-idd"
         u = Student(name=request.user.first_name, user=request.user, email=request.user.email, department=branch)
         u.save()
