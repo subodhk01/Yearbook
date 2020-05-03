@@ -7,6 +7,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 import requests
 import os
 import re
+import logging
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -114,6 +115,12 @@ def profile(request):
         query = r"(?<=\.)(.*)(?=\@)"
         branch = str(re.search(r"(?<=\.)(.*)(?=\@)", email).group(0))[-5:-2]
         if(IDDyear+"@" in email):
+            try:
+                logging.basicConfig(filename='year15.log',level=logging.INFO)
+                logging.info(email)
+            except:
+                pass
+            return redirect('logout')
             branch += "-idd"
         u = Student(name=request.user.first_name, user=request.user, email=request.user.email, department=branch)
         u.save()
