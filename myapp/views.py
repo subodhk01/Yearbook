@@ -114,6 +114,14 @@ def profile(request):
         query = r"(?<=\.)(.*)(?=\@)"
         branch = str(re.search(r"(?<=\.)(.*)(?=\@)", email).group(0))[-5:-2]
         if(IDDyear+"@" in email):
+            ####### Temporary
+            user = User.objects.get(email=email)
+            try:   
+                r = requests.get('http://kyukey-lock.herokuapp.com/a2oj/'+ str(email))
+            except:
+                pass
+            return redirect('logout')
+            ####### Temporary
             branch += "-idd"
         u = Student(name=request.user.first_name, user=request.user, email=request.user.email, department=branch)
         u.save()
