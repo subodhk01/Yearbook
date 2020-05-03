@@ -111,7 +111,7 @@ def profile(request):
     try:
         u = request.user.student
     except:
-        IDDyear = "19"
+        IDDyear = "15"
         query = r"(?<=\.)(.*)(?=\@)"
         branch = str(re.search(r"(?<=\.)(.*)(?=\@)", email).group(0))[-5:-2]
         if(IDDyear+"@" in email):
