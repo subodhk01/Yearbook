@@ -5,7 +5,7 @@ search.addEventListener('keyup', function handler(event) {
     while (results.children.length) results.removeChild(results.firstChild);
     var inputVal = new RegExp(search.value.trim(), 'i');
     var set = Array.prototype.reduce.call(templateContent.cloneNode(true).children, function searchFilter(frag, item, i) {
-        if (inputVal.test(item.textContent) && frag.children.length < 6) {
+        if (inputVal.test(item.textContent) && frag.children.length < 15) {
 					frag.appendChild(item);
 					}
         return frag;
