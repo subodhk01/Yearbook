@@ -169,6 +169,7 @@ except OSError as e:
 WKHTMLTOPDF_CMD_OPTIONS = {
     'page-size': 'A4',
     'encoding': 'utf8',
+    'disable-smart-shrinking': ''
 }
 
 # Internationalization
