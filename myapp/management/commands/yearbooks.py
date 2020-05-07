@@ -92,7 +92,7 @@ class Command(base.BaseCommand):
 
         folder = os.path.join(COLLAGES_PATH, dep)
         collage_urls = (
-            '/media/collages/%s' % f for f in os.listdir(folder)
+            '/media/collages/%s/%s' % (dep, f) for f in os.listdir(folder)
             if os.path.isfile(os.path.join(folder, f))
         )
 
@@ -108,7 +108,7 @@ class Command(base.BaseCommand):
 
     async def generate_dept_yearbook(self, dep, **options):
         print('==== Generating for', DEPARTMENTS_MAP[dep], '====')
-        context = self.get_data(dep)
+        context = await self.get_data(dep)
         output_dir = options['output']
         filename = 'yearbook_{dep}.pdf'.format(dep=dep)
         path = os.path.join(output_dir, filename)
