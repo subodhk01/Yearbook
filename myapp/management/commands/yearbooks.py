@@ -1,5 +1,6 @@
 import os
 
+from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.management import base, call_command
 
@@ -81,7 +82,10 @@ class Command(base.BaseCommand):
 
         # To deal with static loads
         domain = Site.objects.get_current().domain
-        base_url = 'https://%s' % (domain,)
+        base_url = '{protocol}://{domain}'.format(
+            protocol='http' if settings.DEBUG else 'https',
+            domain=domain
+        )
         return {
             'base_url': base_url,
             'students': students_dep,
@@ -91,6 +95,7 @@ class Command(base.BaseCommand):
         }
 
     def generate_dept_yearbook(self, dep, **options):
+        print('Generating for', DEPARTMENTS_MAP[dep])
         context = self.get_data(dep)
         output_dir = options['output']
         with open(os.path.join(output_dir, 'yearbook_{dep}.pdf'.format(dep=dep)), 'wb') as f:
