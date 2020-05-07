@@ -14,12 +14,11 @@ def get_poll_votes(polls):
                 Person=models.User.objects.filter(username=person)[0].student.name
             except:
                 Person=""
-            tmpVotes.append([int(count),Person])
-        print(tmpVotes)
+            tmpVotes.append((int(count),Person))
         tmpVotes.sort(reverse=True)
         ind = min(5,len(tmpVotes))
         if ind!=0:
-            result.append([p.poll,tmpVotes[0:ind]])
+            result.append((p.poll, tmpVotes[0:ind]))
     return result
 
 class Command(base.BaseCommand):
@@ -61,6 +60,20 @@ class Command(base.BaseCommand):
                         ques_ans.append((str(q.question), ans))
                 except KeyError:
                     pass
+            comments = list()
+            for a in student.CommentsIGet:
+                try:
+                    c_student = models.User.objects.filter(username=a['fromWhom']).first().student.name
+                    if a['comment'] and a['displayInPdf'] == 'True':
+                        if a.get('showNameinPDF', 'False') == 'True':
+                            val = (a['comment'], c_student)
+                        else:
+                            val = (a['comment'], '')
+                        comments.append(val)
+                except:
+                    pass
+            student.AnswersAboutMyself = ques_ans
+            student.CommentsIGet = comments
 
         all_polls=get_poll_votes(models.Poll.objects.filter(department='all'))
         dep_polls=get_poll_votes(models.Poll.objects.filter(department=dep))
