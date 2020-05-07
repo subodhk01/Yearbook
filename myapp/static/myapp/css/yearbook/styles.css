@@ -34,7 +34,7 @@ body {
   page-break-after: always;
   margin: 0;
   padding: 0;
-  width: 210mm;
+  max-width: 100%;
   min-height: 100vh !important;
 }
 
@@ -92,6 +92,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
 }
 
 #looney{
@@ -106,10 +107,11 @@ body {
   /*padding-top: 40vh;*/
 }
 #polls{
-  min-height:100vh;
+  margin-top: 5%;
   margin-left: 5%;
+}
+.pollrow {
   margin-right: 5%;
-  padding-top: 5%;
 }
 #groupPics{
   min-height:100vh;
