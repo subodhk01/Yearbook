@@ -19,7 +19,7 @@
     <!-- Theme CSS -->  
     <!-- <link rel="stylesheet" type="text/css" href="{% static 'myapp/css/main.css'%}"> -->
     <link href="https://fonts.googleapis.com/css?family=Gaegu:700" rel="stylesheet">
-    <link id="theme-style" rel="stylesheet" href="{% static 'myapp/css/yearbook/styles.css'%}">
+    <link id="theme-style" rel="stylesheet" href="{{ base_url }}{% static 'myapp/css/yearbook/styles.css'%}">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -40,7 +40,7 @@
     </div>
     <div id="departmentIntro">
         <!-- <h1>add the official group photo</h1> -->
-        <img src="{%static '/myapp/images/collage.png' %}" style="max-width: 100%">
+        <img src="{{ base_url }}{%static '/myapp/images/collage.png' %}" style="max-width: 100%">
     </div>
     <div id="polls">
         <!-- Use this for polls -->

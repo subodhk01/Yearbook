@@ -1,5 +1,6 @@
 import os
 
+from django.contrib.sites.models import Site
 from django.core.management import base, call_command
 
 from myapp import DEPARTMENTS_MAP, models, utils
@@ -78,7 +79,11 @@ class Command(base.BaseCommand):
         all_polls=get_poll_votes(models.Poll.objects.filter(department='all'))
         dep_polls=get_poll_votes(models.Poll.objects.filter(department=dep))
 
+        # To deal with static loads
+        domain = Site.objects.get_current().domain
+        base_url = f'https://{domain}'
         return {
+            'base_url': base_url,
             'students': students_dep,
             'department': DEPARTMENTS_MAP[dep],
             'allPolls': all_polls,
