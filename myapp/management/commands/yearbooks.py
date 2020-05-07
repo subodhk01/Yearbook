@@ -38,6 +38,11 @@ class Command(base.BaseCommand):
             type=str,
             help='Output folder'
         )
+        parser.add_argument(
+            '--all',
+            action='store_true',
+            help='Batch generate all yearbooks!'
+        )
 
     def setup(self, **options):
         output_dir = options['output']
@@ -67,13 +72,21 @@ class Command(base.BaseCommand):
             'deptPolls': dep_polls
         }
 
-    def handle(self, *args, **options):
-        self.setup(**options)
-        dep = options['department']
-        if dep not in DEPARTMENTS_MAP:
-            raise ValueError('Invalid department passed!')
+    def generate_dept_yearbook(self, dep, **options):
         context = self.get_data(dep)
         output_dir = options['output']
         with open(os.path.join(output_dir, f'yearbook_{dep}.pdf'), 'wb') as f:
             pdf = utils.get_pdf_response('myapp/yearbook.html', 'dep', context, False)
             f.write(pdf)
+
+    def handle(self, *args, **options):
+        self.setup(**options)
+        batch_gen = options['all']
+        if batch_gen:
+            for dep in DEPARTMENTS_MAP:
+                self.generate_dept_yearbook(dep, **options)
+        else:
+            dep = options['department']
+            if dep not in DEPARTMENTS_MAP:
+                raise ValueError('Invalid department passed!')
+            self.generate_dept_yearbook(dep, **options)
