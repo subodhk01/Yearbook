@@ -2,7 +2,8 @@
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
-<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->  
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<html lang="en" dir="ltr">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yearbook</title>
@@ -29,128 +30,130 @@
 </head>
 
 <body>
-    <div id="heading">
-        <h1>Yearbook</h1>
-        <!-- <h2>To the looney toons we sang here...</h2> -->
-        <!-- <h3>Add a department pic</h3> -->
+    <div class="page">
+        <div id="heading">
+            <h1 class="absolute-center">Yearbook</h1>
+            <!-- <h2>To the looney toons we sang here...</h2> -->
+            <!-- <h3>Add a department pic</h3> -->
+        </div>
     </div>
-    <div id="looney">
-        <h1>{{department}}</h1>
-        <h1>To the looney tunes we sang here...</h1>
+    <div class="page">
+        <div id="looney" class="absolute-center">
+            <h1>{{department}}</h1>
+            <h1>To the looney tunes we sang here...</h1>
+        </div>
     </div>
-    <div id="departmentIntro">
+    <div class="page" id="departmentIntro">
         <!-- <h1>add the official group photo</h1> -->
         <img src="{{ base_url }}{%static '/myapp/images/collage.png' %}" style="max-width: 100%">
     </div>
-    <div id="polls">
-        <!-- Use this for polls -->
-        {% if allPolls %}
-            <section class="skills-section section">
-                <h2 class="section-title"><i class="fa fa-comments"></i> General Polls</h2>
-                <div class="skillset"> 
-                <div class="container">
-                    <div class="row">  
-                        {% for poll,votes in allPolls %}  
-                            <div style="padding: 0px" class="col-md-4 card">
-                              <div class="card-header">{{poll}}</div>
-                              <div class="card-body">
-                                {% for ct,mem in votes %}
-                                    <li>{{mem}} </li>
-                                 {% endfor %}
-                              </div> 
+        <div id="polls">
+            <!-- Use this for polls -->
+            {% if allPolls %}
+            <div class="page">
+                <section class="skills-section section">
+                    <h2 class="section-title"><i class="fa fa-comments"></i> General Polls</h2>
+                    <div class="skillset"> 
+                    <div class="container">
+                        <div class="row">
+                            {% for poll,votes in allPolls %}
+                                <div style="padding: 0px" class="col-4 card">
+                                <div class="card-header">{{poll}}</div>
+                                <div class="card-body">
+                                    {% for ct,mem in votes %}
+                                        <li>{{mem}} </li>
+                                    {% endfor %}
+                                </div> 
+                                </div>
+                            {% endfor %} 
                             </div>
-                          {% endfor %} 
+                        </div>
+                    </div>
+                </section>
+            {% if deptPolls %}
+            </div>
+            {% endif %}
+            {% endif %}
+            <hr>
+            {% if deptPolls %}
+            <div class="page">
+                <section class="skills-section section">
+                    <h2 class="section-title"><i class="fa fa-comments"></i> Department Polls</h2>
+                    <div class="skillset">
+                        <div class="container">
+                            <div class="row">
+                                {% for poll,votes in deptPolls %}  
+                                    <div style="padding: 0px" class="col-4 card">
+                                    <div class="card-header">{{poll}}</div>
+                                    <div class="card-body">
+                                        {% for ct,mem in votes %}
+                                            <li>{{mem}}</li>
+                                        {% endfor %}
+                                    </div> 
+                                    </div>
+                                {% endfor %}  
+                            </div>
                         </div>
                     </div>  
-                </div>  
-            </section>
-        {% endif %}   
-        <hr> 
-        <!-- Use this for polls -->
-        {% if request.user %}
-
-        {% if deptPolls %}
-            <section class="skills-section section">
-                <h2 class="section-title"><i class="fa fa-comments"></i> Department Polls</h2>
-                <div class="skillset">   
-                    <div class="container">
-                      <div class="row">
-                        {% for poll,votes in deptPolls %}  
-                            <div style="padding: 0px" class="col-md-4 card">
-                              <div class="card-header">{{poll}}</div>
-                              <div class="card-body">
-                                {% for ct,mem in votes %}
-                                    <li>{{mem}}</li>
-                                 {% endfor %}
-                              </div> 
-                            </div>
-                        {% endfor %}  
-                   </div>
-                  </div>
-                </div>  
-            </section>
-        {% endif %}   
-<!-- 
-        {% else %}
-         <h2 class="section-title"><i class="fa fa-comments"></i> Department
-           Polls (TBD) </h2>
-              
-        {% endif %} -->
-    </div>
-    {% for student in students %}
-    <div class="wrapper">
-        <div class="sidebar-wrapper">
-            <div class="profile-container">
-                <img style="height:200px;width: auto;max-width: 100%;" class="profile" src="{{ base_url }}{{student.DP.url}}" alt="" />
-                <h1 class="name">{{student.name}}</h1>
-                <h3 class="tagline">{{student.oneliner}} &nbsp;</h3>
-            </div><!--//profile-container-->
-            
-            <div class="contact-container container-block">
-            	<center>
-                <ul class="list-unstyled contact-list" style="display: inline;" align="center">
-                    <li class="email"><i class="fa fa-envelope"></i>{{student.email}}</li>
-                    <li class="phone"><i class="fa fa-phone"></i>{{student.phone}}</li>
-                    <li class="email"><i class="fa fa-institution"></i>{{student.department}}</li>
-                    <li class="email"><i class="fa fa-briefcase"></i>{{student.future}}</li>
-                   
-                </ul>
-                </center>
-            </div><!--//contact-container-->
-            
-        </div><!--//sidebar-wrapper-->
-        <div class="main-wrapper">
-             <section class="section experiences-section">
-                <h2 class="section-title"><i class="fa fa-archive"></i>Answers about yourself</h2>
-                {% for ques,ans in student.AnswersAboutMyself %}
-                    <div class="item" style="word-wrap: break-word; page-break-inside: avoid;">
-                        <span class="job-title">{{ques}}</span> <br> <span class="project-tagline">{{ans}}</span>
-                        
-                    </div>
-                {% endfor %}
-
-            </section><!--//section-->
-
-            <section class="section experiences-section">
-                <!-- <h2 class="section-title"><i class="fa fa-list-ol"></i>What others have written for you</h2> -->
-                                
-                {% for comment,fromWhom in student.CommentsIGet %}
-                    <div class="item" style="word-wrap: break-word; page-break-inside: avoid;">
-                        <div class="meta">
-                            <div class="upper-row">
-                                <h3 class="job-title">{{fromWhom}}</h3>
-                            </div>
-                        </div>
-                        <div class="details">
-                            <p>{{comment}}</p>
-                        </div>
-                    </div>
-                {% endfor %}
-            </section>
+                </section>
+            {% else %}
+            <h2 class="section-title"><i class="fa fa-comments"></i> Department Polls (TBD) </h2>
+            {% endif %}
+            </div>
         </div>
-    </div>
-    {% endfor %}
-          
+        {% for student in students %}
+        <div class="wrapper">
+            <div class="sidebar-wrapper">
+                <div class="profile-container">
+                    <!-- <img style="height:200px;width: auto;max-width: 100%;" class="profile" src="{{ base_url }}{{student.DP.url}}" alt="" /> -->
+                    <h1 class="name">{{student.name}}</h1>
+                    <h3 class="tagline">{{student.oneliner}} &nbsp;</h3>
+                </div><!--//profile-container-->
+                
+                <div class="contact-container container-block">
+                    <center>
+                    <ul class="list-unstyled contact-list" style="display: inline;" align="center">
+                        <li class="email"><i class="fa fa-envelope"></i>{{student.email}}</li>
+                        <li class="phone"><i class="fa fa-phone"></i>{{student.phone}}</li>
+                        <li class="email"><i class="fa fa-institution"></i>{{student.department}}</li>
+                        <li class="email"><i class="fa fa-briefcase"></i>{{student.future}}</li>
+                    
+                    </ul>
+                    </center>
+                </div><!--//contact-container-->
+                
+            </div><!--//sidebar-wrapper-->
+            <div class="main-wrapper">
+                <section class="section experiences-section">
+                    <h2 class="section-title"><i class="fa fa-archive"></i>Answers about yourself</h2>
+                    {% for ques,ans in student.AnswersAboutMyself %}
+                        <div class="item" style="word-wrap: break-word; page-break-inside: avoid;">
+                            <span class="job-title">{{ques}}</span> <br> <span class="project-tagline">{{ans}}</span>
+                            
+                        </div>
+                    {% endfor %}
+
+                </section><!--//section-->
+
+                <section class="section experiences-section">
+                    <!-- <h2 class="section-title"><i class="fa fa-list-ol"></i>What others have written for you</h2> -->
+                                    
+                    {% for comment,fromWhom in student.CommentsIGet %}
+                        <div class="item" style="word-wrap: break-word; page-break-inside: avoid;">
+                            <div class="meta">
+                                <div class="upper-row">
+                                    <h3 class="job-title">{{fromWhom}}</h3>
+                                </div>
+                            </div>
+                            <div class="details">
+                                <p>{{comment}}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </section>
+            </div>
+        </div>
+        {% endfor %}
 </body>
 </html> 
 

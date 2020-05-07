@@ -8,6 +8,25 @@
 */
 /* styles.css */
 /* ======= Base ======= */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  text-rendering: optimizeLegibility;
+}
+
+.page {
+  position: relative;
+  page-break-after: always;
+  margin: 0;
+  padding: 0;
+  /* Yeah, I know width and height don't conform to A4 dimensions. Life is weird :D */
+  width: 28cm;
+  height: 39.6cm;
+  overflow: hidden;
+}
+
 @page { 
      margin: 0;
      padding: 0;
@@ -35,7 +54,7 @@
 }
 
 #heading{
-  min-height:100vh ;
+  min-height:100%;
   background-image: url("../../images/bg.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -50,19 +69,24 @@
 }
 #heading h1{
   width: 30%;
-  padding:20px;
-  margin-left: 35%;
   background-color: rgba(0,0,0,0.8);
   -webkit-box-shadow: 3px 3px 5px 6px #000;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
   -moz-box-shadow:    3px 3px 5px 6px #000;  /* Firefox 3.5 - 3.6 */
   box-shadow:         3px 3px 5px 6px #000;  /* Opera 10.5, IE 9, Firefox 4+, Chrome */
 }
+
+.absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 #looney{
-  min-height: 100vh;
   font-family: Gaegu;
   text-align: center;
-  padding-top: 40vh;
 }
+
 #departmentIntro{
   min-height: 100vh;
   font-family: Gaegu;
