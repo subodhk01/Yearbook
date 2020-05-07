@@ -51,7 +51,7 @@ class Command(base.BaseCommand):
         os.makedirs(output_dir, exist_ok=True)
 
     def get_data(self, dep):
-        students_dep = models.Student.objects.filter(department=dep)
+        students_dep = models.Student.objects.filter(department=dep).order_by('name')
         questions = models.GenQuestion.objects.all()
 
         for student in students_dep:
