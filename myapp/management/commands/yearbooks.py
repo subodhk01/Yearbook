@@ -1,3 +1,4 @@
+import asyncio
 import os
 
 from django.conf import settings
@@ -6,8 +7,9 @@ from django.core.management import base, call_command
 
 from myapp import DEPARTMENTS_MAP, models, utils
 
+COLLAGES_PATH = os.path.join(settings.MEDIA_ROOT, 'collages')
 
-def get_poll_votes(polls):
+async def get_poll_votes(polls):
     result = list()
     for p in polls:
         tmpVotes = []
@@ -45,12 +47,12 @@ class Command(base.BaseCommand):
             help='Batch generate all yearbooks!'
         )
 
-    def setup(self, **options):
+    async def setup(self, **options):
         self.verbose = options['verbosity'] > 1
         output_dir = options['output']
         os.makedirs(output_dir, exist_ok=True)
 
-    def get_data(self, dep):
+    async def get_data(self, dep):
         students_dep = models.Student.objects.filter(department=dep).order_by('name')
         questions = models.GenQuestion.objects.all()
 
@@ -78,8 +80,8 @@ class Command(base.BaseCommand):
             student.AnswersAboutMyself = ques_ans
             student.CommentsIGet = comments
 
-        all_polls = get_poll_votes(models.Poll.objects.filter(department='all'))
-        dep_polls = get_poll_votes(models.Poll.objects.filter(department=dep))
+        all_polls = await get_poll_votes(models.Poll.objects.filter(department='all'))
+        dep_polls = await get_poll_votes(models.Poll.objects.filter(department=dep))
 
         # To deal with static loads
         domain = Site.objects.get_current().domain
@@ -88,16 +90,23 @@ class Command(base.BaseCommand):
             domain=domain
         )
 
+        folder = os.path.join(COLLAGES_PATH, dep)
+        collage_urls = (
+            '/media/collages/%s' % f for f in os.listdir(folder)
+            if os.path.isfile(os.path.join(folder, f))
+        )
+
         return {
             'base_url': base_url,
             'students': students_dep,
             'department': DEPARTMENTS_MAP[dep],
-            'collage_url': '/media/collages/{dep}.jpg'.format(dep=dep),
+            'dept_photo': '/media/dept/{dep}.jpg'.format(dep=dep),
+            'collage_urls': collage_urls,
             'allPolls': all_polls,
             'deptPolls': dep_polls
         }
 
-    def generate_dept_yearbook(self, dep, **options):
+    async def generate_dept_yearbook(self, dep, **options):
         print('==== Generating for', DEPARTMENTS_MAP[dep], '====')
         context = self.get_data(dep)
         output_dir = options['output']
@@ -109,14 +118,16 @@ class Command(base.BaseCommand):
             pdf = utils.get_pdf_response('myapp/yearbook.html', 'dep', context, False, verbose=self.verbose)
             f.write(pdf)
 
-    def handle(self, *args, **options):
-        self.setup(**options)
+    async def handle_async(self, *args, **options):
+        await self.setup(**options)
         batch_gen = options['all']
         if batch_gen:
-            for dep in DEPARTMENTS_MAP:
-                self.generate_dept_yearbook(dep, **options)
+            asyncio.gather(*(self.generate_dept_yearbook(dep, **options) for dep in DEPARTMENTS_MAP))
         else:
             dep = options['department']
             if dep not in DEPARTMENTS_MAP:
                 raise ValueError('Invalid department passed!')
-            self.generate_dept_yearbook(dep, **options)
+            await self.generate_dept_yearbook(dep, **options)
+
+    def handle(self, *args, **options):
+        asyncio.run(self.handle_async(*args, **options))

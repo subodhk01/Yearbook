@@ -43,10 +43,12 @@
             <h1>To the looney tunes we sang here...</h1>
         </div>
     </div>
+    {% if dept_photo %}
     <div class="page" id="departmentIntro">
         <!-- <h1>add the official group photo</h1> -->
-        <img src="{{ base_url }}{{ collage_url }}" style="max-width: 100%">
+        <img src="{{ base_url }}{{ dept_photo }}" style="max-width: 100%">
     </div>
+    {% endif %}
     <div class="pages">
         <div id="polls">
             <!-- Use this for polls -->
@@ -145,6 +147,13 @@
         </div>
     </div>
     {% endfor %}
+    {% if collage_urls %}
+    <div class="pages">
+        {% for collage_url in collage_urls %}
+        <img src="{{ base_url }}{{ collage_url }}" />
+        {% endfor %}
+    </div>
+    {% endif %}
 </body>
 </html> 
 
