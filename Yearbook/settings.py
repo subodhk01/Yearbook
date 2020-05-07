@@ -24,7 +24,7 @@ SECRET_KEY = '0)f5-u(p#y^oza438k_i^7*yga2(dno@uw@loap)%kq_l8n=$1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Also maybe we need to remove CORS_ORIGIN_ALLOW_ALL True declaration
-DEBUG = False
+DEBUG = True
 LOGIN_URL = '/'
 ALLOWED_HOSTS = ['*']
 CORS_ORIGIN_ALLOW_ALL = True
@@ -169,7 +169,11 @@ except OSError as e:
 WKHTMLTOPDF_CMD_OPTIONS = {
     'page-size': 'A4',
     'encoding': 'utf8',
-    'disable-smart-shrinking': ''
+    'disable-smart-shrinking': '',
+    'margin-top': '0',
+    'margin-bottom': '0',
+    'margin-left': '0',
+    'margin-right': '0'
 }
 
 # Internationalization
