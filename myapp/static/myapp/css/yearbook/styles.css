@@ -109,9 +109,20 @@ body {
 #polls{
   margin-top: 5%;
   margin-left: 5%;
+  padding-top: 5%;
 }
 .pollrow {
+  display: -webkit-box; /* wkhtmltopdf uses this one */
+  display: -webkit-flex;
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
   margin-right: 5%;
+}
+.pollcol {
+  margin-top: 10px;
+  display: inline-block; /* (To wrap on new line) */
+  width: 33%;
 }
 #groupPics{
   min-height:100vh;

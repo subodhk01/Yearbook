@@ -54,10 +54,9 @@
                 <section class="skills-section section">
                     <h2 class="section-title"><i class="fa fa-comments"></i> General Polls</h2>
                     <div class="skillset"> 
-                    <div class="container">
-                        <div class="row pollrow">
+                        <div class="pollrow">
                             {% for poll,votes in allPolls %}
-                                <div style="padding: 0px" class="col-4 card">
+                                <div style="padding: 0px" class="pollcol card">
                                 <div class="card-header">{{poll}}</div>
                                 <div class="card-body">
                                     {% for ct,mem in votes %}
@@ -66,7 +65,6 @@
                                 </div> 
                                 </div>
                             {% endfor %} 
-                            </div>
                         </div>
                     </div>
                 </section>
@@ -77,19 +75,17 @@
                 <section class="skills-section section">
                     <h2 class="section-title"><i class="fa fa-comments"></i> Department Polls</h2>
                     <div class="skillset">
-                        <div class="container">
-                            <div class="row pollrow">
-                                {% for poll,votes in deptPolls %}  
-                                    <div style="padding: 0px" class="col-4 card">
-                                    <div class="card-header">{{poll}}</div>
-                                    <div class="card-body">
-                                        {% for ct,mem in votes %}
-                                            <li>{{mem}}</li>
-                                        {% endfor %}
-                                    </div> 
-                                    </div>
-                                {% endfor %}  
-                            </div>
+                        <div class="pollrow">
+                            {% for poll,votes in deptPolls %}
+                                <div style="padding: 0px" class="pollcol card">
+                                <div class="card-header">{{poll}}</div>
+                                <div class="card-body">
+                                    {% for ct,mem in votes %}
+                                        <li>{{mem}}</li>
+                                    {% endfor %}
+                                </div> 
+                                </div>
+                            {% endfor %}  
                         </div>
                     </div>  
                 </section>
