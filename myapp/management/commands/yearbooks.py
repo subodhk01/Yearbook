@@ -81,7 +81,7 @@ class Command(base.BaseCommand):
 
         # To deal with static loads
         domain = Site.objects.get_current().domain
-        base_url = f'https://{domain}'
+        base_url = 'https://%s' % (domain,)
         return {
             'base_url': base_url,
             'students': students_dep,
