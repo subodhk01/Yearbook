@@ -78,8 +78,8 @@ class Command(base.BaseCommand):
             student.AnswersAboutMyself = ques_ans
             student.CommentsIGet = comments
 
-        all_polls=get_poll_votes(models.Poll.objects.filter(department='all'))
-        dep_polls=get_poll_votes(models.Poll.objects.filter(department=dep))
+        all_polls = get_poll_votes(models.Poll.objects.filter(department='all'))
+        dep_polls = get_poll_votes(models.Poll.objects.filter(department=dep))
 
         # To deal with static loads
         domain = Site.objects.get_current().domain
