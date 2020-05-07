@@ -47,10 +47,9 @@
         <!-- <h1>add the official group photo</h1> -->
         <img src="{{ base_url }}{%static '/myapp/images/collage.png' %}" style="max-width: 100%">
     </div>
-        <div id="polls">
+        <div id="polls" class="pages">
             <!-- Use this for polls -->
             {% if allPolls %}
-            <!-- <div class="page"> -->
                 <section class="skills-section section">
                     <h2 class="section-title"><i class="fa fa-comments"></i> General Polls</h2>
                     <div class="skillset"> 
@@ -99,7 +98,6 @@
             {% else %}
             <h2 class="section-title"><i class="fa fa-comments"></i> Department Polls (TBD) </h2>
             {% endif %}
-            <!-- </div> -->
         </div>
         {% for student in students %}
         <div class="wrapper">

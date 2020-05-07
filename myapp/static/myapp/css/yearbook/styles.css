@@ -22,11 +22,20 @@ body {
   margin: 0;
   padding: 0;
   /* Yeah, I know width and height don't conform to A4 dimensions. Life is weird :D */
-  width: 21cm;
-  height: 29.5cm;
-  /* width: 28cm;
-  height: 39.6cm; */
+  /* width: 21cm;
+  height: 29.5cm; */
+  width: 100%;
+  height: 38cm;
   overflow: hidden;
+}
+
+.pages {
+  position: relative;
+  page-break-after: always;
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  min-height: 100vh !important;
 }
 
 @page { 
