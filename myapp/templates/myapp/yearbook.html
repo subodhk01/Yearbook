@@ -50,7 +50,7 @@
         <div id="polls">
             <!-- Use this for polls -->
             {% if allPolls %}
-            <div class="page">
+            <!-- <div class="page"> -->
                 <section class="skills-section section">
                     <h2 class="section-title"><i class="fa fa-comments"></i> General Polls</h2>
                     <div class="skillset"> 
@@ -70,13 +70,13 @@
                         </div>
                     </div>
                 </section>
-            {% if deptPolls %}
+            <!-- {% if deptPolls %}
             </div>
-            {% endif %}
+            {% endif %} -->
             {% endif %}
             <hr>
             {% if deptPolls %}
-            <div class="page">
+            <!-- <div class="page"> -->
                 <section class="skills-section section">
                     <h2 class="section-title"><i class="fa fa-comments"></i> Department Polls</h2>
                     <div class="skillset">
@@ -99,7 +99,7 @@
             {% else %}
             <h2 class="section-title"><i class="fa fa-comments"></i> Department Polls (TBD) </h2>
             {% endif %}
-            </div>
+            <!-- </div> -->
         </div>
         {% for student in students %}
         <div class="wrapper">
@@ -117,7 +117,6 @@
                         <li class="phone"><i class="fa fa-phone"></i>{{student.phone}}</li>
                         <li class="email"><i class="fa fa-institution"></i>{{student.department}}</li>
                         <li class="email"><i class="fa fa-briefcase"></i>{{student.future}}</li>
-                    
                     </ul>
                     </center>
                 </div><!--//contact-container-->
@@ -129,7 +128,6 @@
                     {% for ques,ans in student.AnswersAboutMyself %}
                         <div class="item" style="word-wrap: break-word; page-break-inside: avoid;">
                             <span class="job-title">{{ques}}</span> <br> <span class="project-tagline">{{ans}}</span>
-                            
                         </div>
                     {% endfor %}
 
