@@ -158,6 +158,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# HTML -> PDF
+import pdfkit.configuration
+try:
+    PDFKIT_CONFIG = pdfkit.configuration(
+        wkhtmltopdf='/usr/bin/wkhtmltopdf'
+    )
+except OSError as e:
+    print('PDFKit configuration failed due to wkhtmltopdf. Continuing without it...')
+WKHTMLTOPDF_CMD_OPTIONS = {
+    'page-size': 'A4',
+    'encoding': 'utf8',
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
