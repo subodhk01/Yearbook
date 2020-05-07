@@ -75,7 +75,7 @@ class Command(base.BaseCommand):
     def generate_dept_yearbook(self, dep, **options):
         context = self.get_data(dep)
         output_dir = options['output']
-        with open(os.path.join(output_dir, f'yearbook_{dep}.pdf'), 'wb') as f:
+        with open(os.path.join(output_dir, 'yearbook_{dep}.pdf'.format(dep=dep)), 'wb') as f:
             pdf = utils.get_pdf_response('myapp/yearbook.html', 'dep', context, False)
             f.write(pdf)
 
