@@ -46,6 +46,7 @@ class Command(base.BaseCommand):
         )
 
     def setup(self, **options):
+        self.verbose = options['verbosity'] > 1
         output_dir = options['output']
         os.makedirs(output_dir, exist_ok=True)
 
@@ -95,11 +96,15 @@ class Command(base.BaseCommand):
         }
 
     def generate_dept_yearbook(self, dep, **options):
-        print('Generating for', DEPARTMENTS_MAP[dep])
+        print('==== Generating for', DEPARTMENTS_MAP[dep], '====')
         context = self.get_data(dep)
         output_dir = options['output']
-        with open(os.path.join(output_dir, 'yearbook_{dep}.pdf'.format(dep=dep)), 'wb') as f:
-            pdf = utils.get_pdf_response('myapp/yearbook.html', 'dep', context, False)
+        filename = 'yearbook_{dep}.pdf'.format(dep=dep)
+        path = os.path.join(output_dir, filename)
+        if self.verbose:
+            print('V: Writing to', path)
+        with open(path, 'wb') as f:
+            pdf = utils.get_pdf_response('myapp/yearbook.html', 'dep', context, False, verbose=self.verbose)
             f.write(pdf)
 
     def handle(self, *args, **options):
