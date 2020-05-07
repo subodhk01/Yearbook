@@ -87,10 +87,12 @@ class Command(base.BaseCommand):
             protocol='http' if settings.DEBUG else 'https',
             domain=domain
         )
+
         return {
             'base_url': base_url,
             'students': students_dep,
             'department': DEPARTMENTS_MAP[dep],
+            'collage_url': '/media/collages/{dep}.jpg'.format(dep=dep),
             'allPolls': all_polls,
             'deptPolls': dep_polls
         }

@@ -7,6 +7,7 @@ Author:
 import argparse
 import os
 import random
+
 from PIL import Image
 
 
@@ -29,7 +30,11 @@ def make_collage(images, filename, width, init_height):
         while images_list:
             # get first image and resize to `init_height`
             img_path = images_list.pop(0)
-            img = Image.open(img_path)
+            try:
+                img = Image.open(img_path)
+            except IOError:
+                print('Skipped', img_path, 'since it is not a valid image.')
+                continue
             img.thumbnail((width, init_height))
             # when `x` will go beyond the `width`, start the next line
             if x > width:
@@ -81,7 +86,7 @@ def make_collage(images, filename, width, init_height):
     return True
 
 
-def prepare(args):
+def prepare(**kwargs):
     # prepare argument parser
 #     parse = argparse.ArgumentParser(description='Photo collage maker')
 #     parse.add_argument('-f', '--folder', dest='folder', help='folder with images (*.jpg, *.jpeg, *.png)', default='.')
@@ -90,29 +95,30 @@ def prepare(args):
 #     parse.add_argument('-i', '--init_height', dest='init_height', type=int, help='initial height for resize the images')
 #     parse.add_argument('-s', '--shuffle', action='store_true', dest='shuffle', help='enable images shuffle')
 
-#     args = parse.parse_args()
-    if not args['width'] or not args['init_height']:
+#     kwargs = parse.parse_kwargs()
+    if not kwargs['width'] or not kwargs['init_height']:
 #         parse.print_help()
         print("Width or init height not present. Exiting...")
         exit(1)
-#     if not args['output'] : 
+#     if not kwargs['output'] : 
 #         print (" No output path given") 
     # get images
-    files = [os.path.join(args['folder'], fn) for fn in os.listdir(args['folder'])]
+    files = [os.path.join(kwargs['folder'], fn) for fn in os.listdir(kwargs['folder'])]
     images = [fn for fn in files if os.path.splitext(fn)[1].lower() in ('.jpg', '.jpeg', '.png')]
     if not images:
         print('No images for making collage! Please select other directory with images!')
         exit(1)
 
+    output = kwargs['output']
+
     # shuffle images if needed
-    if args['shuffle']:
+    if kwargs['shuffle']:
         random.shuffle(images)
 
     print('Making collage...')
-    res = make_collage(images, args['output'], args['width'], args['init_height'])
+    res = make_collage(images, output, kwargs['width'], kwargs['init_height'])
     if not res:
         print('Failed to create collage!')
         exit(1)
     print('Collage is ready!')
-
 
