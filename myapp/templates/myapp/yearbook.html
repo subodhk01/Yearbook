@@ -98,24 +98,23 @@
     <div class="wrapper">
         <div class="sidebar-wrapper">
             <div class="profile-container">
-                <img style="height:200px;width: auto;max-width: 100%;" class="profile" src="{{ base_url }}{{student.DP.url}}" alt="" />
+                <!-- Use /media/DP/anonymous.jpg for testing -->
+                <img class="profile" src="{{ base_url }}{{student.DP.url}}" alt="" />
                 <h1 class="name">{{student.name}}</h1>
-                <h3 class="tagline">{{student.oneliner}} &nbsp;</h3>
+                {% if student.oneliner %}<h3 class="tagline">{{student.oneliner}} &nbsp;</h3>{% endif %}
             </div><!--//profile-container-->
-            
             <div class="contact-container container-block">
-                <center>
-                <ul class="list-unstyled contact-list" style="display: inline;" align="center">
+                <ul class="list-unstyled contact-list" style="display: inline;">
                     <li class="email"><i class="fa fa-envelope"></i>{{student.email}}</li>
-                    <li class="phone"><i class="fa fa-phone"></i>{{student.phone}}</li>
+                    {% if student.phone %}<li class="phone"><i class="fa fa-phone"></i>{{student.phone}}</li>{% endif %}
                     <li class="email"><i class="fa fa-institution"></i>{{student.department}}</li>
-                    <li class="email"><i class="fa fa-briefcase"></i>{{student.future}}</li>
+                    {% if student.future %}<li class="email"><i class="fa fa-briefcase"></i>{{student.future}}</li>{% endif %}
                 </ul>
-                </center>
             </div><!--//contact-container-->
             
         </div><!--//sidebar-wrapper-->
         <div class="main-wrapper">
+            {% if student.AnswersAboutMyself %}
             <section class="section experiences-section">
                 <h2 class="section-title"><i class="fa fa-archive"></i>Answers about yourself</h2>
                 {% for ques,ans in student.AnswersAboutMyself %}
@@ -123,12 +122,12 @@
                         <span class="job-title">{{ques}}</span> <br> <span class="project-tagline">{{ans}}</span>
                     </div>
                 {% endfor %}
+            </section>
+            {% endif %}
 
-            </section><!--//section-->
-
+            {% if student.CommentsIGet %}
             <section class="section experiences-section">
-                <!-- <h2 class="section-title"><i class="fa fa-list-ol"></i>What others have written for you</h2> -->
-                                
+                <h2 class="section-title"><i class="fa fa-list-ol"></i>What others have written for you</h2>
                 {% for comment,fromWhom in student.CommentsIGet %}
                     <div class="item" style="word-wrap: break-word; page-break-inside: avoid;">
                         <div class="meta">
@@ -142,6 +141,7 @@
                     </div>
                 {% endfor %}
             </section>
+            {% endif %}
         </div>
     </div>
     {% endfor %}

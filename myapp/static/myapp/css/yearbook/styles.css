@@ -182,18 +182,14 @@ p {
   top:0;
   /*right: 0;*/
   width: 100%;
-  height: 300px;
-
   color: #fff;
-  min-height: 25vh !important;  
   -webkit-print-color-adjust: exact;
 }
 .sidebar-wrapper a {
   color: #fff;
 }
 .sidebar-wrapper .profile-container {
-  padding: 30px;
-  padding-top: 10px;
+  padding: 20px;
   background: rgba(0, 0, 0, 0.2);
   text-align: center;
   color: #fff;
@@ -213,6 +209,13 @@ p {
 }
 .sidebar-wrapper .profile {
   margin-bottom: 15px;
+  height: 200px;
+  width: auto;
+  max-width: 100%;
+}
+.sidebar-wrapper .contact-container {
+  text-align: center;
+  position: relative;
 }
 .sidebar-wrapper .contact-list .fa {
   margin-right: 5px;
