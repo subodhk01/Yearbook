@@ -117,7 +117,7 @@
         </div><!--//sidebar-wrapper-->
         <div class="main-wrapper">
             {% if student.AnswersAboutMyself %}
-            <section class="section experiences-section">
+            <section class="section experiences-section answers">
                 <h2 class="section-title"><i class="fa fa-archive"></i>Answers about yourself</h2>
                 {% for ques,ans in student.AnswersAboutMyself %}
                     <div class="item" style="word-wrap: break-word; page-break-inside: avoid;">
@@ -128,7 +128,7 @@
             {% endif %}
 
             {% if student.CommentsIGet %}
-            <section class="section experiences-section">
+            <section class="section experiences-section comments">
                 <h2 class="section-title"><i class="fa fa-list-ol"></i>What others have written for you</h2>
                 {% for comment,fromWhom in student.CommentsIGet %}
                     <div class="item" style="word-wrap: break-word; page-break-inside: avoid;">

@@ -51,16 +51,16 @@ body {
   margin-bottom: 7px;
 
 }
-.experiences-section:nth-of-type(2) .item:nth-child(odd) {
+.comments .item:nth-child(odd) {
   background-color: #43e09b;
 }
-.experiences-section:nth-of-type(2) .item:nth-child(even) {
+.comments .item:nth-child(even) {
   background-color: #80bfd6;
 }
-.experiences-section:nth-of-type(1) .item:nth-child(even) {
+.answers .item:nth-child(even) {
   background-color: #ef8694;
 }
-.experiences-section:nth-of-type(1) .item:nth-child(even) {
+.answers .item:nth-child(even) {
   background-color: #ffc6f3;
 }
 
