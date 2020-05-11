@@ -101,13 +101,13 @@ def index(request):
 @login_required()
 def profile(request):
     email = request.user.email
-    exceptions = ['akul.gupta.phe17@itbhu.ac.in','subodh.verma.min19@itbhu.ac.in','vijay.psingh.chy14@itbhu.ac.in']
+    exceptions = ['subodh.verma.min19@itbhu.ac.in',]
     if request.user.is_superuser:
         return HttpResponse('super users not allowed')
-    if not(re.findall("15@", email) or re.findall("16@", email)) and not(email in exceptions):
-        user = User.objects.get(email=email)
-        user.delete()
-        return redirect('logout')
+    #if not(re.findall("15@", email) or re.findall("16@", email)) and not(email in exceptions):
+    #    user = User.objects.get(email=email)
+    #    user.delete()
+    #    return redirect('logout')
     try:
         u = request.user.student
     except:

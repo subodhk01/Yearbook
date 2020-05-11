@@ -15,32 +15,24 @@ from django.contrib.auth.models import User
 #pswd = config.pswd
 ind = 0
 
-with open("form_new.csv", "rU") as file:
+with open("form_new_mtech.csv", "rU") as file:
     reader = csv.reader(file, delimiter=',')
     for col in reader:
         ind = ind+1
-        user_passwd = col[2].strip()
-        username = re.search(r"([^@]+)", col[1].strip()).group(0).lower()
-        email = col[1].strip()
+        email = col[1].strip().lower()
         email = re.sub("iitbhu","itbhu", email )
+        username = email[0:-12]
         try:
             dep = str(re.search(r"(?<=\.)(.*)(?=\@)", email).group(0))[-5:-2]
         except:
             print("faulty email")
             continue
-        print(username, email, user_passwd)
-        #u = User.objects.create_user(username=username, password=user_passwd ,email=email)
-        #u.save()
+        print(username, email)
         s = Student(name=col[0], department= dep, email=email)
-        #u.student = s
-        #u.student.save()
-        #u = User(username=username, password=user_passwd, email=email)
         
         try:
-            user, created = User.objects.get_or_create(username=username)
-            user.set_password(user_passwd)
-            user.email = email
-            print(user.email)
+            user, created = User.objects.get_or_create(username=username, first_name=col[0], email=email)
+            #print(user.email)
             user.save()
             user.student = s
             user.student.save()
