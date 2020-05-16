@@ -10,6 +10,12 @@
 - get group pics and run collage maker
 - merge all the three
 
+# Collage Generation
+cd to the `/collage` directory and run `compose.py`
+```bash
+python compose.py
+```
+
 # Yearbooks generation
 Usage:
 ```python
